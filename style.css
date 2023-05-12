@@ -24,12 +24,25 @@ html, body {
   border-radius: 1rem;
 }
 
+table {
+  table-layout: fixed;
+}
+
+td {
+  height: 25%;
+  vertical-align: middle;
+}
+
 button {
   width: 5rem;
   height: 4rem;
   font-size: 1.5rem;
   margin: 0.1rem;
   border-radius: 1rem;
+}
+
+.equal {
+  height: 8rem;
 }
 
 .display {

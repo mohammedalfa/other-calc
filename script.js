@@ -77,6 +77,8 @@ operatorButtons.forEach((btn) => {
   });
 });
 
+const negativeButton = document.querySelector(".negative");
+
 const equalButton = document.querySelector(".equal");
 equalButton.addEventListener("click", () => {
   if (calculator.display === "" || calculator.operator === null) return;
