@@ -1,4 +1,5 @@
-const calculatorDisplay = document.querySelector(".display");
+const currentDisplay = document.querySelector(".current");
+const calclationDisplay = document.querySelector(".calculation");
 
 const calculator = {
   display: "",
@@ -20,7 +21,9 @@ const calculator = {
     this.solution = this.number1 / this.number2;
   },
   updateDisplay() {
-    calculatorDisplay.textContent = this.display;
+    currentDisplay.textContent = this.display;
+    calclationDisplay.textContent = `${this.number1 ? this.number1 : ''} \
+    ${this.operator ? this.operator : ''} ${this.number2 ? this.number2 : ''}`;
   },
   clearDisplay() {
     this.display = "";
@@ -31,6 +34,7 @@ const calculator = {
     this.number1 = null;
     this.operator = null;
     this.number2 = null;
+    this.solution = null;
     this.updateDisplay();
   },
   calculate() {
@@ -48,8 +52,8 @@ const calculator = {
         this.divide();
         break;
     }
-    this.clearCalculator()
-    this.display = this.solution;
+    this.clearDisplay()
+    this.display = this.solution.toString();
     this.updateDisplay();
   }
 }
@@ -71,6 +75,7 @@ const operatorButtons = document.querySelectorAll(".operator");
 operatorButtons.forEach((btn) => {
   btn.addEventListener("click", (event) => {
     if (calculator.display === "") return;
+    if (calculator.number2 !== null) calculator.number2 = null; 
     calculator.number1 = +calculator.display;
     calculator.operator = event.target.textContent;
     calculator.clearDisplay();
@@ -78,10 +83,25 @@ operatorButtons.forEach((btn) => {
 });
 
 const negativeButton = document.querySelector(".negative");
+negativeButton.addEventListener("click", () => {
+  if (calculator.display.startsWith("-")) {
+    calculator.display = calculator.display.slice(1);
+  } else {
+    calculator.display = "-" + calculator.display;
+  }
+  calculator.updateDisplay();
+});
 
 const equalButton = document.querySelector(".equal");
 equalButton.addEventListener("click", () => {
   if (calculator.display === "" || calculator.operator === null) return;
   calculator.number2 = +calculator.display;
   calculator.calculate();
+});
+
+const deleteButton = document.querySelector(".delete");
+deleteButton.addEventListener("click", () => {
+  if (calculator.display.length < 1) return;
+  calculator.display = calculator.display.slice(0, -1);
+  calculator.updateDisplay();
 });

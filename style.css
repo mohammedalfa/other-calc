@@ -53,5 +53,19 @@ button {
   border-radius: 1rem;
   margin: 0.5rem 0 0.5rem 0;
   background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+}
+
+.calculation {
+  flex: 0.75;
+}
+
+.current {
+  flex: 1.25;
+  font-size: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
   font-size: 1.5rem;
 }
