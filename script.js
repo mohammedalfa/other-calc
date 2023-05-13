@@ -75,10 +75,19 @@ const operatorButtons = document.querySelectorAll(".operator");
 operatorButtons.forEach((btn) => {
   btn.addEventListener("click", (event) => {
     if (calculator.display === "") return;
-    if (calculator.number2 !== null) calculator.number2 = null; 
-    calculator.number1 = +calculator.display;
-    calculator.operator = event.target.textContent;
-    calculator.clearDisplay();
+    if (calculator.number1 !== null && calculator.operator !== null && calculator.display.length > 0) {
+      calculator.number2 = +calculator.display;
+      if (+calculator.display !== calculator.solution) calculator.calculate();
+      calculator.number1 = calculator.solution;
+      calculator.solution = null;
+      calculator.operator = event.target.textContent;
+      calculator.number2 = null;
+      calculator.clearDisplay();
+    } else {
+      calculator.number1 = +calculator.display;
+      calculator.operator = event.target.textContent;
+      calculator.clearDisplay();
+    }
   });
 });
 
