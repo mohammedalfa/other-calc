@@ -22,8 +22,8 @@ const calculator = {
   },
   updateDisplay() {
     currentDisplay.textContent = this.display;
-    calclationDisplay.textContent = `${this.number1 ? this.number1 : ''} \
-    ${this.operator ? this.operator : ''} ${this.number2 ? this.number2 : ''}`;
+    calclationDisplay.textContent = `${this.number1 !== null ? this.number1 : ''} \
+    ${this.operator !== null ? this.operator : ''} ${this.number2 !== null ? this.number2 : ''}`;
   },
   clearDisplay() {
     this.display = "";
@@ -76,13 +76,20 @@ operatorButtons.forEach((btn) => {
   btn.addEventListener("click", (event) => {
     if (calculator.display === "") return;
     if (calculator.number1 !== null && calculator.operator !== null && calculator.display.length > 0) {
-      calculator.number2 = +calculator.display;
-      if (+calculator.display !== calculator.solution) calculator.calculate();
-      calculator.number1 = calculator.solution;
-      calculator.solution = null;
-      calculator.operator = event.target.textContent;
-      calculator.number2 = null;
-      calculator.clearDisplay();
+      if (calculator.number2 !== null) {
+        calculator.number1 = +calculator.display;
+        calculator.number2 = null;
+        calculator.operator = event.target.textContent;
+        calculator.clearDisplay();
+      } else {
+        calculator.number2 = +calculator.display;
+        calculator.calculate();
+        calculator.number1 = calculator.solution;
+        calculator.solution = null;
+        calculator.operator = event.target.textContent;
+        calculator.number2 = null;
+        calculator.clearDisplay();
+      }
     } else {
       calculator.number1 = +calculator.display;
       calculator.operator = event.target.textContent;
@@ -114,3 +121,10 @@ deleteButton.addEventListener("click", () => {
   calculator.display = calculator.display.slice(0, -1);
   calculator.updateDisplay();
 });
+
+const decimalButton = document.querySelector(".decimal");
+decimalButton.addEventListener("click", () => {
+  if (calculator.display.includes(".")) return;
+  calculator.display += ".";
+  calculator.updateDisplay();
+})
